@@ -15,11 +15,27 @@ import pandas as pd
 import plotly.express as px
 import numpy as np
 from datetime import datetime, timedelta
+from time import time
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import r2_score
 from sklearn.linear_model import LinearRegression
 from sklearn.ensemble import RandomForestRegressor
 from sklearn.model_selection import RandomizedSearchCV
+
+
+def timer_func(func):
+    """ Timer decorator - shows execution time of function passed
+
+    :param func: Function
+    :return: Execution time in seconds
+    """
+    def wrap_func(*args, **kwargs):
+        t1 = time()
+        result = func(*args, **kwargs)
+        t2 = time()
+        print(f'Your model {func.__name__!r} finished in {(t2-t1):.4f}s')
+        return result
+    return wrap_func
 
 
 class SnowflakeForecaster:
@@ -223,6 +239,7 @@ class SnowflakeForecaster:
 
         return regressor
 
+    @timer_func
     def run_linear_regression(self, predict_range, train_size=.75, random_state=0, visualization=False):
         """ Use regression model function to predict next month's warehouse usage
 
@@ -245,6 +262,7 @@ class SnowflakeForecaster:
         if visualization:
             self.visualize_model_forecast(regressor, x_feat_list, predict_range)
 
+    @timer_func
     def run_rf_regression(self, predict_range, n_iter=60, k_folds=5, train_size=.75,
                           random_state=0, visualization=False):
         """ Build and run a Random Forest Regressor
@@ -291,4 +309,4 @@ class SnowflakeForecaster:
 if __name__ == '__main__':
     drift_snowflake_forecast = SnowflakeForecaster('snowflake_usage.csv')
     drift_snowflake_forecast.run_linear_regression(31, visualization=True)
-    drift_snowflake_forecast.run_rf_regression(31, n_iter=150, k_folds=10, train_size=.8, visualization=True)
+    drift_snowflake_forecast.run_rf_regression(31, n_iter=120, k_folds=4, train_size=.75, visualization=True)
