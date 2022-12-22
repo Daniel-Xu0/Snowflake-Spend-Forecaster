@@ -8,4 +8,6 @@ where start_time > dateadd(year, -2, current_date());
 ```
 in Snowflake and download the output as a CSV to obtain the necessary data for this forecaster.
 
-The random forest regression model will likely take a few to ten minutes to run, depending on the params inputted. I'd recommend not going over k_folds > 5 and n_iter > 150 if you want your computer to survive.
+The random forest regression model will likely take a few to ten minutes to run, depending on the params inputted. I'd recommend not going over `k_folds > 5` and `n_iter > 150` if you want your computer to survive.
+
+Have fun with it! I'll continue to update and improve the capabilties of this class periodically
