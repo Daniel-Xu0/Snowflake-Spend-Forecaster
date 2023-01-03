@@ -10,4 +10,6 @@ in Snowflake and download the output as a CSV to obtain the necessary data for t
 
 The random forest regression model will likely take a few minutes to run, depending on the params inputted. I'd recommend not going over `k_folds > 5` and `n_iter > 150` if you want your computer to survive.
 
+After the models have run, the script will then forecast the next X number of days of Snowflake spend, plotting it in a local browser for your own viewing.
+
 Have fun with it! I'll continue to update and improve the capabilties of this class periodically
